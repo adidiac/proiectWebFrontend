@@ -8,6 +8,7 @@ import {
     Switch,
     Route,
   } from "react-router-dom"
+import ProductsListPage from './Components/Pages/ProductsListPage'
 function App() {
     return ( 
     <div className = "App page-container" >
@@ -17,6 +18,7 @@ function App() {
             <Route path="/products/:id">
             </Route>
             <Route path="/products">
+              <ProductsListPage />
             </Route>
             <Route path="/profile">
             </Route>

@@ -17,7 +17,7 @@ function Navigation()
                        <Link style={padding} to="/">Home</Link>
                     </Nav.Link>
                     <Nav.Link href="#" as="span">
-                        <Link style={padding} to="/notes">Produse</Link>
+                        <Link style={padding} to="/products">Produse</Link>
                     </Nav.Link> 
                     <Nav.Link href="#" as="span">
                         {user

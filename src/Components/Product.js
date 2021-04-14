@@ -6,7 +6,7 @@ function Product({name, price, url,id})
     return (
         <>
             <Link to={pageDirection}>
-                <Card style={{ width: '15rem' }}>
+                <Card style={{ width: '15rem',marginLeft:20,marginBottom:10 }}>
                     <Card.Img src={url}>
 
                     </Card.Img>
