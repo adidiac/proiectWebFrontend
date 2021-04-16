@@ -15,7 +15,9 @@ function ProductsListPage()
     return(
         <Container style={{marginTop:20}}>
             <Col>
-            <Row>
+            <Row style={{justifyContent:"space-evenly"}}>
+                
+                    <Row>
                 <h3>
                     Filter by:
                 </h3>
@@ -31,23 +33,27 @@ function ProductsListPage()
                         <Dropdown.Item onClick={()=>{setFilter("Popularity")}}>Popularity</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                <div style={{width:50}} />
-                <h3>
-                    Set Price Interval:
-                </h3>
-                <div style={{width:20}} />
-                <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        {priceInterval}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu style={{textAlign:"center"}}>
-                        <Dropdown.Item onClick={()=>{setPriceInterval("< 50")}}>{"<50"}</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>{setPriceInterval("50-100")}}>{"50-100"}</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>{setPriceInterval("100-200")}}>{"100-200"}</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>{setPriceInterval("200 >")}}>{"200 >"}</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <div style={{width:50}} />
+                </Row>
+                <Row>
+                    <h3>
+                        Set Price Interval:
+                    </h3>
+                    <div style={{width:20}} />
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            {priceInterval}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu style={{textAlign:"center"}}>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("< 50")}}>{"<50"}</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("50-100")}}>{"50-100"}</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("100-200")}}>{"100-200"}</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("200 >")}}>{"200 >"}</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    </Row>
+               
+               
+                    <Row>
                 <InputGroup className="mb-3" style={{width:300}}>
                     <FormControl
                     placeholder="Search..."
@@ -58,6 +64,8 @@ function ProductsListPage()
                     <Button variant="outline-secondary"><Icon.Search /></Button>
                     </InputGroup.Append>
                 </InputGroup>
+                </Row>
+              
             </Row>
             <Row style={{marginTop:20}}>
                 {list.map((elem)=><Product name={elem.name} id={elem.id} url={elem.url} price={elem.price}></Product>)}

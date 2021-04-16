@@ -9,6 +9,7 @@ import {
     Route,
   } from "react-router-dom"
 import ProductsListPage from './Components/Pages/ProductsListPage'
+import User from './Components/Pages/User'
 function App() {
     return ( 
     <div className = "App page-container" >
@@ -21,10 +22,12 @@ function App() {
               <ProductsListPage />
             </Route>
             <Route path="/profile">
+            <User />
             </Route>
             <Route path="/login">
             </Route>
-            <Route path="/">'
+  
+            <Route exact path="/">'
               <Home />
             </Route>
         </Switch>
