@@ -2,6 +2,7 @@ import { Row,Container,Col,Carousel,Image, ListGroup,Text, Dropdown,InputGroup,F
 import * as Icon from 'react-bootstrap-icons'
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
+import Exemplu1 from "../../Assets/pictures/1.jpg";
 import {
     Switch,
     Route,
@@ -17,7 +18,8 @@ function sumProducts(productList)
 function User()
 {
     let match = useRouteMatch();
-    let listaComenzi=[{id:22,pret:222,data:"19/04/2020",produse:[]},{id:22,pret:222,data:"19/04/2020",produse:[]}];
+    let matchComenzi=useRouteMatch(match.path+"/comenzi/:id");
+    let listaComenzi=[{id:22,pret:222,data:"19/04/2020",produse:[{id:22,url:Exemplu1,price:23,name:"Carte"}]},{id:233213,pret:222,data:"19/04/2020",produse:[]}];
 
     return(
         <Row style={{marginTop:50,marginBottom:50}}>
@@ -25,7 +27,6 @@ function User()
         <ListGroup>
             <ListGroup.Item><Link to={match.url}>Adrian</Link></ListGroup.Item>
             <ListGroup.Item><Link to={match.url+"/comenzi"}>Comenzile mele</Link></ListGroup.Item>
-            <ListGroup.Item><Link to={match.url+"/setari"}>Setari</Link></ListGroup.Item>
         </ListGroup>
         </Col>
         <Col sm={9}>
@@ -38,7 +39,7 @@ function User()
                         {"Email: diacadi@gmail.com"}
                     </Card.Text>
                     <Card.Text>
-                        {"Total Comezi: 0"}
+                        {"Total Comezi: "+listaComenzi.length}
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -47,7 +48,7 @@ function User()
             <Card style={{padding:10,textAlign:"center"}}>
                 <Card.Body>
                     {listaComenzi.map((elem,index)=>{
-                        return <Link to={match.url+"/comenzi/:"+elem.id} >
+                        return <Link to={match.url+"/comenzi/"+elem.id} >
                             <Card style={{marginBottom:15}}>
                             <Row style={{justifyContentent:"space-evenly"}}>
                                 <Col><Card >{"Id comanda: "+elem.id}</Card></Col>
@@ -62,20 +63,19 @@ function User()
             </Route>
             <Route path={match.path+"/comenzi/:id"}>
                 <Card>
-                    {listaComenzi.find(el=>el.id===match.params).produse.map((elem=>
-                        {
-
-                        }))}
+                    {
+                        matchComenzi?
+                        listaComenzi.find(el=>el.id==matchComenzi.params.id).produse.map((el)=>{
+                            return <Link to={"/products/"+el.id}>
+                                <Row style={{justifyContentent:"space-evenly"}}>
+                                <Col><Card >{"Name: "+el.name} </Card></Col>
+                                <Col><Card >{"Pret: "+el.price}  </Card></Col>
+                            </Row>
+                            </Link>})
+                            :
+                        <></>
+                        }
                 </Card>
-            </Route>
-            <Route path={match.path+"/setari"}>
-            <Card style={{padding:40,textAlign:"center"}}>
-                <Card.Body>
-                    <Card.Text>
-                        {"Setari"}
-                    </Card.Text>
-                </Card.Body>
-            </Card>
             </Route>
         </Switch>
         </Col>

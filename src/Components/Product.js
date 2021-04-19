@@ -2,7 +2,7 @@ import {Image,Container,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 function Product({name, price, url,id})
 {
-    const pageDirection="/product/:"+id;
+    const pageDirection="/product/"+id;
     return (
         <>
             <Link to={pageDirection}>

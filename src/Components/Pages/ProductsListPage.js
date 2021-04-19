@@ -1,17 +1,31 @@
 import { Row,Container,Col,Carousel,Image, ListGroup,Text, Dropdown,InputGroup,FormControl,Button } from "react-bootstrap";
 import * as Icon from 'react-bootstrap-icons'
+import { useSelector, useDispatch } from 'react-redux'
 import React, { useState } from 'react';
 import Exemplu1 from "../../Assets/pictures/1.jpg";
 import Product from '../Product'
+function comparePrice(a,b)
+{
+    if(a.price>b.price)
+        return 1;
+    if(a.price<b.price)
+        return -1;
+    return 0;
+}
+function compareName(a,b)
+{
+    if(a.name>b.name)
+        return 1;
+    if(a.name<b.name)
+        return -1;
+    return 0;
+}
 function ProductsListPage()
 {
     const [filterBy,setFilter]=useState("Filter");
     const [priceInterval,setPriceInterval]=useState("Price Interval");
-    const list=[];
-    for(let i=0;i<10;i++)
-    {
-        list.push({url:Exemplu1,price:24,id:20220,name:"Exemplu"});
-    }
+    const products=useSelector(state=>state.products);
+    const [list,setList]=useState(products);
     return(
         <Container style={{marginTop:20}}>
             <Col>
@@ -27,10 +41,9 @@ function ProductsListPage()
                         {filterBy}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={()=>{setFilter("Price")}}>Price</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>{setFilter("Name")}}>Name</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>{setFilter("Price");setList(list.sort(comparePrice))}}>Price</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>{setFilter("Name");setList(list.sort(compareName))}}>Name</Dropdown.Item>
                         <Dropdown.Item onClick={()=>{setFilter("Author")}}>Author</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>{setFilter("Popularity")}}>Popularity</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
                 </Row>
@@ -44,10 +57,10 @@ function ProductsListPage()
                             {priceInterval}
                         </Dropdown.Toggle>
                         <Dropdown.Menu style={{textAlign:"center"}}>
-                            <Dropdown.Item onClick={()=>{setPriceInterval("< 50")}}>{"<50"}</Dropdown.Item>
-                            <Dropdown.Item onClick={()=>{setPriceInterval("50-100")}}>{"50-100"}</Dropdown.Item>
-                            <Dropdown.Item onClick={()=>{setPriceInterval("100-200")}}>{"100-200"}</Dropdown.Item>
-                            <Dropdown.Item onClick={()=>{setPriceInterval("200 >")}}>{"200 >"}</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("< 50");setList(products.filter(el=>el.price<50));}}>{"<50"}</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("50-100");setList(products.filter(el=>(el.price>50 & el.price<100)));}}>{"50-100"}</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("100-200");setList(products.filter(el=>(el.price>100 & el.price<200)));}}>{"100-200"}</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>{setPriceInterval("200 >");setList(products.filter(el=>el.price>200));}}>{"200 >"}</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                     </Row>

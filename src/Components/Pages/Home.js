@@ -4,7 +4,6 @@ import homeImage1 from '../../Assets/Wallpaper1.png'
 import homeImage2 from '../../Assets/Wallpaper2.png'
 import Product from '../Product'
 import Exemplu from "../../Assets/pictures/1.jpg";
-
 function Home()
 {
     const padding = {

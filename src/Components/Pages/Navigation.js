@@ -1,9 +1,10 @@
-import {Navbar,Nav} from 'react-bootstrap';
+import {Navbar,Nav,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons'
+import React, { useState } from 'react';
 function Navigation()
 {
-    const user="Adrian";
+    const [user,setUser]=useState("Adrian");
     const padding = {
         padding: 5
       }
@@ -22,9 +23,10 @@ function Navigation()
                     <Nav.Link href="#" as="span">
                         {user
                         ? <Link style={padding} to="/profile">{user}</Link>
-                        : <Link style={padding} to="/login">login</Link>
+                        : <Link style={padding} to="/login">Login</Link>
                         }
                     </Nav.Link>
+                    {user?<Button variant="outline-primary" onClick={()=>{setUser(0)}}>Log Out</Button>:<></>}
                 </Nav>
             </Navbar.Collapse>
             <Nav.Link href="#" as="span">
