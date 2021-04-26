@@ -1,4 +1,4 @@
-import { Row,Container,Col,Carousel,Image, ListGroup,Text, Dropdown,InputGroup,FormControl,Button } from "react-bootstrap";
+import { Row,Container,Col,Carousel,Image,Form, ListGroup,Text, Dropdown,InputGroup,FormControl,Button } from "react-bootstrap";
 import * as Icon from 'react-bootstrap-icons'
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useState } from 'react';
@@ -67,16 +67,18 @@ function ProductsListPage()
                
                
                     <Row>
-                <InputGroup className="mb-3" style={{width:300}}>
+                    <Form onSubmit={(e)=>{e.preventDefault();setList(products.filter(el=>el.name.includes(e.target[0].value)))}}>
+                    <InputGroup className="mb-3" style={{width:300}} >
                     <FormControl
                     placeholder="Search..."
                     aria-label="Search"
                     aria-describedby="basic-addon2"
                     />
                     <InputGroup.Append>
-                    <Button variant="outline-secondary"><Icon.Search /></Button>
+                    <Button type='submit' variant="outline-secondary"><Icon.Search /></Button>
                     </InputGroup.Append>
                 </InputGroup>
+                </Form>
                 </Row>
               
             </Row>

@@ -6,10 +6,13 @@ import {useState} from 'react'
 import AdminListEditing from './AdminListEditing';
 import * as Icon from 'react-bootstrap-icons'
 import NewProduct from "./Modals/NewProduct";
+import EditProduct from "./Modals/EditProduct";
 function AdminHome()
 {
     const dispatch=useDispatch();
     const [openNewProduct,setOpenNewProduct]=useState(false);
+    const [openEditProduct,setOpenEditProduct]=useState(false);
+    const [product,setProduct]=useState({id:'',name:'',price:'',author:'',description:'',url:''});
     const [openProducts,setOpenProducts]=useState(false);
     const [openUsers,setOpenUsers]=useState(false);
     const [openComenzi,setOpenComenzi]=useState(false);
@@ -61,7 +64,11 @@ function AdminHome()
                 </Link>
         
                 <AdminListEditing listToShow={products} open={openProducts} content={{header:'name',body:'price'}} buttonList={[
-                <Button variant={'outline-info'} size='sm'><Icon.Pen /></Button>,
+                <Button variant={'outline-info'} size='sm' onClick={
+                    (e)=>{
+                        setProduct(products[e.currentTarget.parentElement.parentElement.id]);
+                        setOpenEditProduct(!openEditProduct);
+                }}><Icon.Pen /></Button>,
                 <Button variant={'outline-info'} size='sm' onClick={(e)=>{dispatch({type:'DELETE_PRODUCT',data:{index:e.currentTarget.parentElement.parentElement.id}})}}><Icon.X /></Button>,
                 ]}
                 additionalButtons={[
@@ -79,6 +86,16 @@ function AdminHome()
                 </Button>
             </Row>
             <NewProduct show={openNewProduct} setShow={setOpenNewProduct}></NewProduct>
+            <EditProduct 
+            show={openEditProduct} 
+            setShow={setOpenEditProduct} 
+            id={product.id} 
+            name={product.name} 
+            description={product.description}
+            url={product.url}
+            price={product.price} 
+            >
+            </EditProduct>
         </Container>
         </div>
     );
