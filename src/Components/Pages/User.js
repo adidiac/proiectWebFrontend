@@ -3,6 +3,7 @@ import * as Icon from 'react-bootstrap-icons'
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import Exemplu1 from "../../Assets/pictures/1.jpg";
+import { useSelector, useDispatch } from 'react-redux'
 import {
     Switch,
     Route,
@@ -17,9 +18,11 @@ function sumProducts(productList)
 }
 function User()
 {
+    const user=useSelector(state=>state.user);
+    const dispatch=useDispatch();
     let match = useRouteMatch();
     let matchComenzi=useRouteMatch(match.path+"/comenzi/:id");
-    let listaComenzi=[{id:22,pret:222,data:"19/04/2020",produse:[{id:22,url:Exemplu1,price:23,name:"Carte"}]},{id:233213,pret:222,data:"19/04/2020",produse:[]}];
+    let listaComenzi=user.comenzi;
 
     return(
         <Row style={{marginTop:50,marginBottom:50}}>
@@ -66,7 +69,7 @@ function User()
                     {
                         matchComenzi?
                         listaComenzi.find(el=>el.id==matchComenzi.params.id).produse.map((el)=>{
-                            return <Link to={"/products/"+el.id}>
+                            return <Link to={"/product/"+el.id}>
                                 <Row style={{justifyContentent:"space-evenly"}}>
                                 <Col><Card >{"Name: "+el.name} </Card></Col>
                                 <Col><Card >{"Pret: "+el.price}  </Card></Col>

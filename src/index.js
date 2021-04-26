@@ -8,14 +8,17 @@ import {createStore,combineReducers} from 'redux';
 import {shopListReducer} from './Reducers/shopListReducer';
 import {userReducer} from './Reducers/userReducer';
 import {productsReducer} from './Reducers/productsReducer';
+import {usersReducer} from './Reducers/usersReducer'
 import {
   BrowserRouter as Router,
 } from "react-router-dom"
+import './index.css';
 
 const reducer=combineReducers({
   user:userReducer,
   shop:shopListReducer,
-  products:productsReducer
+  products:productsReducer,
+  users:usersReducer
 })
 
 const store=createStore(reducer);
@@ -27,28 +30,27 @@ for(let i=0;i<10;i++)
 store.dispatch({type:'LOGIN',
 data:{
   name:'Diac Adrian',
+  admin:false,
   email:'diacadi@gmail.com',
   comenzi:
-  [
-    {
-    id:22,
-    produse: [
-      {
-        id:2,
-        name:"Exemplu",
-        price:24
-      }
-      ]
-    }
+  [{id:22,pret:222,data:"19/04/2020",produse:[{id:2,url:Exemplu1,price:23,name:"Carte"}]},{id:233213,pret:222,data:"19/04/2020",produse:[]}
   ]
 }});
-console.log(store.getState());
+store.dispatch({type:'NEW_USER',data:{
+  name:'Diac Adrian',
+  admin:false,
+  email:'diacadi@gmail.com',
+  comenzi:
+  [{id:22,pret:222,data:"19/04/2020",produse:[{id:2,url:Exemplu1,price:23,name:"Carte"}]},{id:233213,pret:222,data:"19/04/2020",produse:[]}
+  ]
+}})
+console.log(store.getState().user.admin);
 
 ReactDOM.render( 
     <React.StrictMode >
        <Router>
         <Provider store={store}>
-           <App />
+          {store.getState().user.admin?<></>:<App />}
         </Provider>
       </Router>
     </React.StrictMode> ,

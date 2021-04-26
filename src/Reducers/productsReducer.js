@@ -5,10 +5,10 @@ export const productsReducer=(state=[],action)=>
         return state;
     }
     if(action.type==='DELETE_PRODUCT') {
-        let index=state.find(el=>el.id===action.data.id);
+        let index=action.data.index;
         state= [
             ...state.slice(0, index),
-            ...state.slice(index + 1)
+            ...state.splice(index + 1)
         ];
         return state;
     }

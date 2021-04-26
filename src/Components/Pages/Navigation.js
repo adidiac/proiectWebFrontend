@@ -1,10 +1,13 @@
-import {Navbar,Nav,Button} from 'react-bootstrap';
+import {Navbar,Nav,Button,Row,Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons'
+import { useSelector, useDispatch } from 'react-redux'
 import React, { useState } from 'react';
 function Navigation()
 {
-    const [user,setUser]=useState("Adrian");
+    const user=useSelector(state=>state.user);
+    const shopList=useSelector(state=>state.shop);
+    const dispatch=useDispatch();
     const padding = {
         padding: 5
       }
@@ -22,15 +25,20 @@ function Navigation()
                     </Nav.Link> 
                     <Nav.Link href="#" as="span">
                         {user
-                        ? <Link style={padding} to="/profile">{user}</Link>
+                        ? <Link style={padding} to="/profile">{user.name}</Link>
                         : <Link style={padding} to="/login">Login</Link>
                         }
                     </Nav.Link>
-                    {user?<Button variant="outline-primary" onClick={()=>{setUser(0)}}>Log Out</Button>:<></>}
+                    {user?<Link to='/login'><Button variant="outline-primary" onClick={()=>{dispatch({type:'LOGOUT'})}}>Log Out</Button></Link>:<></>}
                 </Nav>
             </Navbar.Collapse>
             <Nav.Link href="#" as="span">
-                <Link style={padding} to="/shoplist"><Icon.Basket  size={30}/></Link>
+                <Link style={padding} to="/shoplist">
+                <Row style={{position:'relative'}}>
+                    <Icon.Basket  size={35}/>
+                <h5 style={{top:25,left:20,position:'absolute',color:'white',backgroundColor:'red',borderRadius:'50%',width:25,height:25,textAlign:'center'}}>{shopList.length}</h5>
+                </Row>
+                </Link>
             </Nav.Link>
         </Navbar>
     </div>

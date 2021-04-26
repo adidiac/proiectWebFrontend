@@ -1,10 +1,10 @@
-export const shopListReducer=(state=[],action)=>
+export  const  usersReducer=(state=[],action)=>
 {
-    if(action.type==='NEW_SHOP') {
+    if(action.type==='NEW_USER') {
         state=[...state,action.data];
         return state;
     }
-    if(action.type==='DELETE_SHOP') {
+    if(action.type==='DELETE_USER') {
         let index=action.data.index;
         state= [
             ...state.slice(0, index),

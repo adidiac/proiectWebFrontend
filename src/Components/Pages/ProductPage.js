@@ -1,7 +1,8 @@
 import { Container,Image,Row,Col,Card, Button } from "react-bootstrap";
-
+import { useSelector, useDispatch } from 'react-redux'
 function ProductPage({url,name,description,price,author,id})
 {
+    const dispatch=useDispatch();
     console.log('Hello');
     return (<Container style={{padding:20}}>
         <Row>
@@ -25,7 +26,7 @@ function ProductPage({url,name,description,price,author,id})
                 <Row style={{fontWeight:"bold",color:"red"}}>{"Price: "+price}</Row>
                 <hr></hr>
                 <Row style={{justifyContent:"center"}}>
-                    <Button style={{width:"100%"}}>Buy</Button>
+                    <Button style={{width:"100%"}} onClick={()=>{dispatch({type:'NEW_SHOP',data:{id:id,url:url,name:name,description:description,price:price,author:author}})}}>Buy</Button>
                 </Row>
             </Col>
         </Row>

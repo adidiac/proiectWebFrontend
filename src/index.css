@@ -1,0 +1,7 @@
+body {
+    height: 100%;
+    margin: 0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}

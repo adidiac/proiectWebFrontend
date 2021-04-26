@@ -1,6 +1,7 @@
 import { Row,Container,Col,Carousel,Image, ListGroup } from "react-bootstrap";
 import { Divider } from "react-bootstrap";
 import homeImage1 from '../../Assets/Wallpaper1.png'
+import { useSelector, useDispatch } from 'react-redux'
 import homeImage2 from '../../Assets/Wallpaper2.png'
 import Product from '../Product'
 import Exemplu from "../../Assets/pictures/1.jpg";
@@ -13,11 +14,7 @@ function Home()
         height:400,
         width:"max"
     }
-    let list=[{url:Exemplu,price:24,id:20220,name:"Exemplu"}];
-    for(let i=0;i<10;i++)
-    {
-        list.push({url:Exemplu,price:24,id:20220,name:"Exemplu"});
-    }
+    const list=useSelector(state=>state.products).filter((el,idx)=>idx<5);
     return (
         <Container>
             <Col>

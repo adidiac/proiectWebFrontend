@@ -8,5 +8,10 @@ export const userReducer=(state=0,action)=>
         state=action.data;
         return state;
     }
+    if(action.type==='ADD_COMANDA')
+    {
+        state={...state,comenzi:[...state.comenzi,action.data]};
+        return state;
+    }
     return state;
 }
