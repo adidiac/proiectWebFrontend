@@ -44,13 +44,14 @@ store.dispatch({type:'NEW_USER',data:{
   [{id:22,pret:222,data:"19/04/2020",produse:[{id:2,url:Exemplu1,price:23,name:"Carte"}]},{id:233213,pret:222,data:"19/04/2020",produse:[]}
   ]
 }})
-console.log(store.getState().user.admin);
-
+store.subscribe((e)=>{
+  console.log(e);
+})
 ReactDOM.render( 
     <React.StrictMode >
        <Router>
         <Provider store={store}>
-          {store.getState().user.admin?<></>:<App />}
+          <App />
         </Provider>
       </Router>
     </React.StrictMode> ,

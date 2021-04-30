@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 function ProductPage({url,name,description,price,author,id})
 {
     const dispatch=useDispatch();
-    console.log('Hello');
     return (<Container style={{padding:20}}>
         <Row>
             <Col style={{justifyContent:"center"}}>

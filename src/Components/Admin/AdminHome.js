@@ -23,8 +23,6 @@ function AdminHome()
     return (
         <div class="AdminPanel">
         <Container style={{textAlign:'center',marginTop:50}}>
-            <h1 style={{color:"whitesmoke"}}> Welcome to Admin Panel</h1>
-            <hr style={{border:" 1px solid white",marginTop:40}}></hr>
             <Row style={{justifyContent:'space-evenly'}}>
                 <Link style={{ textDecoration: 'none' }} onClick={()=>setOpenUsers(!openUsers)}>
                     <Card bg={'info'} text='white' style={{ width: '18rem' }} className="mb-2">
