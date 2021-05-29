@@ -9,10 +9,12 @@ import {shopListReducer} from './Reducers/shopListReducer';
 import {userReducer} from './Reducers/userReducer';
 import {productsReducer} from './Reducers/productsReducer';
 import {usersReducer} from './Reducers/usersReducer'
+
 import {
   BrowserRouter as Router,
 } from "react-router-dom"
 import './index.css';
+
 
 const reducer=combineReducers({
   user:userReducer,
@@ -22,28 +24,7 @@ const reducer=combineReducers({
 })
 
 const store=createStore(reducer);
-//here would come the get from backend but we will use the hardcodat for user, products;
-for(let i=0;i<10;i++)
-{
-  store.dispatch({type:'ADD_PRODUCT',data:{id:i,url:Exemplu1,price:i*24,name:"Exemplu",author:'',description:' '}});
-}
-store.dispatch({type:'LOGIN',
-data:{
-  name:'Diac Adrian',
-  admin:false,
-  email:'diacadi@gmail.com',
-  comenzi:
-  [{id:22,pret:222,data:"19/04/2020",produse:[{id:2,url:Exemplu1,price:23,name:"Carte"}]},{id:233213,pret:222,data:"19/04/2020",produse:[]}
-  ]
-}});
-store.dispatch({type:'NEW_USER',data:{
-  name:'Diac Adrian',
-  admin:false,
-  email:'diacadi@gmail.com',
-  comenzi:
-  [{id:22,pret:222,data:"19/04/2020",produse:[{id:2,url:Exemplu1,price:23,name:"Carte"}]},{id:233213,pret:222,data:"19/04/2020",produse:[]}
-  ]
-}})
+
 store.subscribe((e)=>{
   console.log(e);
 })

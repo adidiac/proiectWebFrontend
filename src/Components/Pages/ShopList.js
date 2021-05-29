@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import {Link} from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons'
 import {useHistory} from 'react-router-dom';
+import * as UserService from '../../Service/usersService'
+import User from "./User";
 function CalculateTotalPrice(shopList)
 {
     let sum=0;
@@ -13,6 +15,7 @@ function ShopList()
 {
     const history=useHistory();
     const productList=useSelector(state=>state.shop);
+    console.log(productList)
     const dispatch = useDispatch();
     const user=useSelector(state=>state.user);
     return (
@@ -36,9 +39,14 @@ function ShopList()
                         <Row style={{justifyContent:'center',margin:20}}><Card.Text>{"Total Price is: "+CalculateTotalPrice(productList)}</Card.Text></Row>
                         <Row style={{justifyContent:'center',margin:20}}> <Button onClick={()=>
                             {
+                                let totalprice=0
+                                let productListNew=[]
+                                productList.map(el=>{
+                                    totalprice+=el.price;
+                                    productListNew.push({id:el.id,price:el.price})})
+                                let order={totalPrice:totalprice,productList:productListNew}
                                 if(user){
-                                    dispatch({type:"ADD_COMANDA",data:{id:2323,data:'azi',produse:productList}});
-                                    dispatch({type:'EMPTY'});
+                                   UserService.createOrder(order,user,dispatch)
                                 }
                                 else{
                                     window.alert('Please login first');

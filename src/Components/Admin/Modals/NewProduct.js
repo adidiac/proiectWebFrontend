@@ -2,10 +2,12 @@ import { Container,Image,Row,Col,Card, Button ,Alert,Modal,Form, useAccordionTog
 import { useSelector, useDispatch } from 'react-redux'
 import {useState} from 'react'
 import * as Icon from 'react-bootstrap-icons'
+import * as ProductService from '../../../Service/productService'
 function NewProduct({show,setShow})
 {
     
     const dispatch=useDispatch();
+    const user=useSelector(state=>state.user)
     const productsLength=useSelector(state=>state.products).length;
     return <>
     <Modal show={show} onHide={()=>setShow(!show)}>
@@ -15,7 +17,11 @@ function NewProduct({show,setShow})
         <Modal.Body>
         <Form onSubmit={(e)=>{
             e.preventDefault();
-            dispatch({type:'ADD_PRODUCT',data:{id:productsLength+1,url:e.target[4].value,price:e.target[2].value,name:e.target[0].value,author:e.target[3].value,description:e.target[1]}});
+            console.log("De aici ")
+            console.log(e.target[4].files)
+            let product={url:e.target[4].files[0],price:e.target[2].value,name:e.target[0].value,author:e.target[3].value,description:e.target[1].value}
+            ProductService.createProduct(product,user,dispatch)
+           
                 }}>
             <Form.Group controlId="formName">
                 <Form.Control type="text" placeholder="Enter name of product" />

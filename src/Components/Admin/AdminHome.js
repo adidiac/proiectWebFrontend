@@ -2,11 +2,13 @@ import { Container,Image,Row,Col,Card, Button ,Alert} from "react-bootstrap";
 import { useSelector, useDispatch } from 'react-redux'
 import {Link} from 'react-router-dom';
 import {Collapse} from 'react-bootstrap'
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import AdminListEditing from './AdminListEditing';
 import * as Icon from 'react-bootstrap-icons'
 import NewProduct from "./Modals/NewProduct";
 import EditProduct from "./Modals/EditProduct";
+import * as UserService from '../../Service/usersService'
+import * as ProductService from '../../Service/productService'
 function AdminHome()
 {
     const dispatch=useDispatch();
@@ -18,13 +20,20 @@ function AdminHome()
     const [openComenzi,setOpenComenzi]=useState(false);
     const products=useSelector(state=>state.products);
     const users=useSelector(state=>state.users);
+    const user=useSelector(state=>state.user)
+    useEffect(() => {
+        UserService.getAllUsers(user,dispatch);
+    }, [])
     let comenzi=[];
-    users.map((el)=>el.comenzi.map((e)=>comenzi.push(e)));
+    users.map((el)=>el.orders.map((e)=>comenzi.push(e)));
     return (
         <div class="AdminPanel">
         <Container style={{textAlign:'center',marginTop:50}}>
             <Row style={{justifyContent:'space-evenly'}}>
-                <Link style={{ textDecoration: 'none' }} onClick={()=>setOpenUsers(!openUsers)}>
+                <Link style={{ textDecoration: 'none' }} onClick={()=>{
+                    
+                    setOpenUsers(!openUsers)
+                }}>
                     <Card bg={'info'} text='white' style={{ width: '18rem' }} className="mb-2">
                     <Card.Body>
                     <Card.Title>Users management</Card.Title>
@@ -36,10 +45,12 @@ function AdminHome()
                 </Link>
                 <AdminListEditing listToShow={users} open={openUsers} content={{header:'name',body:'email'}} additionalButtons={[]} buttonList={[
                 <Button variant={'outline-info'} size='sm' onClick={(e)=>{
-                    dispatch({type:'DELETE_USER',data:{index:e.currentTarget.parentElement.parentElement.id}})
+                    let idx=e.currentTarget.parentElement.parentElement.id;
+                    UserService.deleteUser(users[idx].id,user)
+                    dispatch({type:'DELETE_USER',data:{index:idx}})
                 }}><Icon.X /></Button>,
                 ]} />
-                <Link style={{ textDecoration: 'none' }} onClick={()=>setOpenComenzi(!openComenzi)}>
+                <Link style={{ textDecoration: 'none' }} onClick={()=>{setOpenComenzi(!openComenzi)}}>
                     <Card bg={'info'} text='white' style={{ width: '18rem' }} className="mb-2">
                     <Card.Body>
                     <Card.Title>Comenzi management</Card.Title>
@@ -49,7 +60,7 @@ function AdminHome()
                     </Card.Body>
                     </Card>
                 </Link>
-                <AdminListEditing listToShow={comenzi} open={openComenzi}  content={{header:'id',body:'pret'}} buttonList={[]}  additionalButtons={[]}/>
+                <AdminListEditing listToShow={comenzi} open={openComenzi}  content={{header:'_id',body:'totalPrice'}} buttonList={[]}  additionalButtons={[]}/>
                 <Link style={{ textDecoration: 'none' }} onClick={()=>setOpenProducts(!openProducts)}>
                     <Card bg={'info'} text='white' style={{ width: '18rem' }} className="mb-2">
                     <Card.Body>
@@ -62,12 +73,16 @@ function AdminHome()
                 </Link>
         
                 <AdminListEditing listToShow={products} open={openProducts} content={{header:'name',body:'price'}} buttonList={[
-                <Button variant={'outline-info'} size='sm' onClick={
-                    (e)=>{
-                        setProduct(products[e.currentTarget.parentElement.parentElement.id]);
-                        setOpenEditProduct(!openEditProduct);
-                }}><Icon.Pen /></Button>,
-                <Button variant={'outline-info'} size='sm' onClick={(e)=>{dispatch({type:'DELETE_PRODUCT',data:{index:e.currentTarget.parentElement.parentElement.id}})}}><Icon.X /></Button>,
+                // <Button variant={'outline-info'} size='sm' onClick={
+                //     (e)=>{
+                //         setProduct(products[e.currentTarget.parentElement.parentElement.id]);
+                //         //setOpenEditProduct(!openEditProduct);
+                // }}><Icon.Pen /></Button>,
+                <Button variant={'outline-info'} size='sm' onClick={(e)=>{
+                    let idx=e.currentTarget.parentElement.parentElement.id;
+                    ProductService.deleteProduct(products[idx].id,user)
+                    dispatch({type:'DELETE_PRODUCT',data:{index:idx}})
+                }}><Icon.X /></Button>,
                 ]}
                 additionalButtons={[
                 <Button variant='info' onClick={()=>setOpenNewProduct(true)} style={{margin:20,borderRadius:'70%',width:150,height:150}}><Icon.Plus style={{width:100,height:100}} /></Button>]}

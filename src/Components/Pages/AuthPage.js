@@ -1,23 +1,16 @@
 import {Form,Button,Tabs,Tab, Container,Card} from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
+import * as UserService from '../../Service/usersService'
 import {useHistory} from 'react-router-dom';
 function LoginComponent()
 {
     const setUser=useDispatch();
+    const user=useSelector(state=>state.user)
     const history=useHistory();
-    return (<><Form  onSubmit={(e)=>{
+    return (<><Form  onSubmit={async (e)=>{
       //here will use service for auth
       e.preventDefault();
-      if(e.target[0].value==='admin@admin.com')
-      {
-        setUser({type:'LOGIN',data:{email:e.target[0].value,name:'Admin',admin:true}});
-        history.push('/');
-      }
-      else
-      {
-      setUser({type:'LOGIN',data:{email:e.target[0].value,name:'Adrian',admin:false,comenzi:[]}});
-      history.push('/profile')
-      }
+      UserService.loginUser(e.target[0].value,e.target[1].value,setUser,history);
     }}
     style={{margin:30}}>
         <Form.Group controlId="formBasicEmail">
@@ -38,18 +31,25 @@ function LoginComponent()
 }
 function RegisterComponent()
 {
-    return (<><Form style={{margin:30}}>
+  const setUser=useDispatch();
+  const user=useSelector(state=>state.user)
+  const history=useHistory();
+    return (<><Form style={{margin:30}} onSubmit={async (e)=>{
+      //here will use service for auth
+      e.preventDefault();
+      UserService.registerUser(e.target[0].value,e.target[1].value,e.target[2].value,setUser,history);
+      }}>
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Label>Your name</Form.Label>
+          <Form.Control type="text" placeholder="Enter name" />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Email</Form.Label>
+          <Form.Control type="email" placeholder="Email" />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Retype Password</Form.Label>
-          <Form.Control type="password" placeholder="Retype Password" />
         </Form.Group>
         <Container  style={{textAlign:"center"}}>
         <Button  variant="primary" type="submit">

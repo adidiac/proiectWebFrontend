@@ -8,11 +8,11 @@ export  const  usersReducer=(state=[],action)=>
         let index=action.data.index;
         state= [
             ...state.slice(0, index),
-            ...state.splice(index + 1)
+            ...state.slice(index + 1)
         ];
         return state;
     }
-    if(action.type==='EMPTY')
+    if(action.type==='EMPTY_USERS')
     {
         state=[];
         return state;
